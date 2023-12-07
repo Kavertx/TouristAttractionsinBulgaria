@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Tourist Attractions in Bulgaria</string>
     <string name="title_home">Home</string>
-    <string name="regions">Regions</string>
+    <string name="districts">Districts</string>
     <string name="attractions">Attractions</string>
     <string name="attraction">Attraction</string>
     <string name="description">Description</string>
-    <string name="region">Region</string>
+    <string name="district">District</string>
 </resources>

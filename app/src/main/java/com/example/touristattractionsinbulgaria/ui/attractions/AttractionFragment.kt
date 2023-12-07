@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionListBinding
+import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionBinding
 
-class AttractionListFragment : Fragment() {
+class AttractionFragment  : Fragment() {
 
-    private var _binding: FragmentAttractionListBinding? = null
+    private var _binding: FragmentAttractionBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,9 +22,9 @@ class AttractionListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val attractionListViewModel =
-            ViewModelProvider(this).get(AttractionListViewModel::class.java)
+            ViewModelProvider(this).get(AttractionViewModel::class.java)
 
-        _binding = FragmentAttractionListBinding.inflate(inflater, container, false)
+        _binding = FragmentAttractionBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
 

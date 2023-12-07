@@ -11,10 +11,10 @@
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/regionsFragment"
-        android:name="com.example.touristattractionsinbulgaria.ui.regions.RegionListFragment"
-        android:label="@string/regions"
-        tools:layout="@layout/fragment_region_list" />
+        android:id="@+id/districtsFragment"
+        android:name="com.example.touristattractionsinbulgaria.ui.districts.DistrictListFragment"
+        android:label="@string/districts"
+        tools:layout="@layout/fragment_district_list" />
     <fragment
         android:id="@+id/attractionsFragment"
         android:name="com.example.touristattractionsinbulgaria.ui.attractions.AttractionListFragment"

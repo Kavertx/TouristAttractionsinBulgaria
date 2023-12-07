@@ -4,46 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.attractions.AttractionFragment">
-
-    <ImageView
-        android:id="@+id/image_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic" />
-
+    tools:context=".ui.districts.DistrictFragment">
     <TextView
-        android:id="@+id/attraction_name"
+        android:id="@+id/district_name"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintWidth_default="percent"
         app:layout_constraintWidth_percent="0.75"
         app:layout_constraintHeight_default="percent"
-        app:layout_constraintHeight_percent="0.05"
-        android:text="@string/attraction"
+        app:layout_constraintHeight_percent="0.08"
+        android:text="@string/district"
         android:textAlignment="center"
         android:textStyle="bold"
         android:fontFamily="serif"
-        android:padding="6dp"
-        android:textSize="18sp"
+        android:padding="15dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_view" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/attraction_description"
+        android:id="@+id/district_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
-        android:textSize="14sp"
+        android:padding="10dp"
+        android:textSize="16sp"
         android:scrollbars="vertical"
         android:text="@string/description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/attraction_name" />
+        app:layout_constraintTop_toBottomOf="@id/district_name" />
 </androidx.constraintlayout.widget.ConstraintLayout>
