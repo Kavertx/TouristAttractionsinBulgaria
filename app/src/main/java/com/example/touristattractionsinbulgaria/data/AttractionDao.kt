@@ -2,9 +2,14 @@ package com.example.touristattractionsinbulgaria.data
 
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.Query
 
 @Dao
 interface AttractionDao {
     @Insert
     suspend fun insert(attraction: Attraction)
+    @Query("SELECT * FROM attraction ORDER BY attractionName ASC")
+    fun getAllAttractions():List<Attraction>
+    @Query("SELECT * FROM attraction WHERE attractionName= :attractionName")
+    fun getAttraction(attractionName: String): Attraction
 }

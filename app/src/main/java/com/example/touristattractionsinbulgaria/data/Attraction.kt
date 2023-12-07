@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-//TODO: Find a way to attach region to attraction in order to be able to sort them
+//TODO: Find a way to attach district to attraction in order to be able to sort them
 @Entity
 data class Attraction(
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
