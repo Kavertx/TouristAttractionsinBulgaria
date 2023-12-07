@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.example.touristattractionsinbulgaria.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/regionsFragment"
+        android:name="com.example.touristattractionsinbulgaria.ui.regions.RegionListFragment"
+        android:label="@string/regions"
+        tools:layout="@layout/fragment_region_list" />
+    <fragment
+        android:id="@+id/attractionsFragment"
+        android:name="com.example.touristattractionsinbulgaria.ui.attractions.AttractionListFragment"
+        android:label="@string/attractions"
+        tools:layout="@layout/fragment_attraction_list" />
+
+</navigation>
