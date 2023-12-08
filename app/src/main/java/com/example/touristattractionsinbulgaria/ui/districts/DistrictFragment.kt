@@ -22,12 +22,11 @@ class DistrictFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DistrictViewModel::class.java)
+            ViewModelProvider(this)[DistrictViewModel::class.java]
 
         _binding = FragmentDistrictBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {

@@ -22,16 +22,15 @@ class DistrictListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val dashboardViewModel =
-            ViewModelProvider(this).get(DistrictListViewModel::class.java)
+            ViewModelProvider(this)[DistrictListViewModel::class.java]
 
         _binding = FragmentDistrictListBinding.inflate(inflater, container, false)
-        val root: View = binding.root
 
 
 //        dashboardViewModel.text.observe(viewLifecycleOwner) {
 //            textView.text = it
 //        }
-        return root
+        return binding.root
     }
 
     override fun onDestroyView() {
