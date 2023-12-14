@@ -1,24 +1,22 @@
 package com.example.touristattractionsinbulgaria.ui.attractions
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.touristattractionsinbulgaria.data.AttractionDao
+import com.example.touristattractionsinbulgaria.data.ImageDao
 
-class AttractionListViewModel(private val attractionDao: AttractionDao) : ViewModel() {
+class AttractionListViewModel(private val attractionDao: AttractionDao, private val imageDao: ImageDao) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
 }
 
-class AttractionListViewModelFactory(private val attractionDao: AttractionDao) : ViewModelProvider.Factory {
+class AttractionListViewModelFactory(private val attractionDao: AttractionDao, private val imageDao: ImageDao) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(AttractionViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(AttractionListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return AttractionListViewModel(attractionDao) as T
+            return AttractionListViewModel(attractionDao, imageDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

@@ -6,10 +6,11 @@ import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 
-@Entity(foreignKeys = arrayOf(ForeignKey(entity = Attraction::class,
+@Entity(foreignKeys = [ForeignKey(entity = Attraction::class,
     parentColumns = arrayOf("id"),
     childColumns = arrayOf("attractionId"),
-    onDelete = ForeignKey.CASCADE)))
+    onDelete = ForeignKey.CASCADE)]
+)
 data class Image(
     @PrimaryKey(autoGenerate = true) val id: Int =0,
     @ColumnInfo val imageUrl: String,

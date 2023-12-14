@@ -14,4 +14,7 @@ interface DistrictDao {
     fun getAllDistricts(): List<District>
     @Query("SELECT * FROM district WHERE districtName= :districtName")
     fun getDistrict(districtName: String): District
+
+    @Query("SELECT id FROM district WHERE districtName= :districtName")
+    fun getDistrictId(districtName: String): Int
 }

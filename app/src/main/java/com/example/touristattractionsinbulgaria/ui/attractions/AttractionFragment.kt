@@ -15,7 +15,8 @@ class AttractionFragment  : Fragment() {
     private var _binding: FragmentAttractionBinding? = null
     private val viewModel: AttractionViewModel by activityViewModels {
         AttractionViewModelFactory(
-            (activity?.application as TouristAttractionApplication).database.attractionDao()
+            (activity?.application as TouristAttractionApplication).database.attractionDao(),
+            (activity?.application as TouristAttractionApplication).database.imageDao()
         )
     }
 

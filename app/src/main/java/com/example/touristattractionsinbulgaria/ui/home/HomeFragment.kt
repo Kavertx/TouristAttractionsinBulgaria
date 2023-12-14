@@ -5,12 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
+import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+    private val viewModel: HomeViewModel by activityViewModels {
+        HomeViewModelFactory(
+            (activity?.application as TouristAttractionApplication).database.districtDao(),
+            (activity?.application as TouristAttractionApplication).database.attractionDao(),
+            (activity?.application as TouristAttractionApplication).database.imageDao()
+        )
+    }
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -21,8 +30,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
+
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 

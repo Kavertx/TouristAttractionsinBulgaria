@@ -5,16 +5,14 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-//TODO: Find a way to attach district to attraction in order to be able to sort them
-@Entity(foreignKeys = arrayOf(
-    ForeignKey(entity = District::class,
+@Entity(foreignKeys = [ForeignKey(entity = District::class,
     parentColumns = arrayOf("id"),
-    childColumns = arrayOf("attractionDistrict"),
-    onDelete = ForeignKey.CASCADE)
-))
+    childColumns = arrayOf("attractionDistrictId"),
+    onDelete = ForeignKey.CASCADE)]
+)
 data class Attraction(
     @PrimaryKey(autoGenerate = true) val id:Int = 0,
     @ColumnInfo val attractionName: String,
     @ColumnInfo val description: String,
-    @ColumnInfo val attractionDistrict: Int
+    @ColumnInfo val attractionDistrictId: Int
 )
