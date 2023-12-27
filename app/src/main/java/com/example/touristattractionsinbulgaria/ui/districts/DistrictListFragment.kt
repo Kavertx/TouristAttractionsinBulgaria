@@ -1,6 +1,7 @@
 package com.example.touristattractionsinbulgaria.ui.districts
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,12 +31,17 @@ class DistrictListFragment : Fragment() {
     ): View {
 
         _binding = FragmentDistrictListBinding.inflate(inflater, container, false)
-
-
-//        dashboardViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        try {
+//            viewModel.doNothing()
+//        }
+//        catch (e: Exception){
+//            Log.d("district err", e.toString())
+//        }
     }
 
     override fun onDestroyView() {

@@ -1,5 +1,6 @@
 package com.example.touristattractionsinbulgaria.ui.districts
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,10 +10,10 @@ import com.example.touristattractionsinbulgaria.ui.attractions.AttractionViewMod
 
 class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+    fun doNothing(){
+        val a = 4+9
+        Log.d("a", "$a")
     }
-    val text: LiveData<String> = _text
 }
 
 

@@ -1,13 +1,17 @@
 package com.example.touristattractionsinbulgaria.ui.home
 
+import android.app.Application
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentHomeBinding
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
@@ -20,7 +24,6 @@ class HomeFragment : Fragment() {
             (activity?.application as TouristAttractionApplication).database.imageDao()
         )
     }
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -30,17 +33,23 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-
-//        homeViewModel.text.observe(viewLifecycleOwner) {
-//            textView.text = it
-//        }
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        try{
+            viewModel.addDistricts()
+//            viewModel.addAttractionData()
+//            viewModel.addImages()
+        }
+        catch (e: Exception){
+            Log.d("err", e.toString())
+        }
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

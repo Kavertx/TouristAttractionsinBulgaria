@@ -13,7 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.http.Query
 
-
+//TODO: For attractions in bulgarian, use the bg.wikipedia.org base url or just delete all attractions in bg
 private const val BASE_URL = "https://en.wikipedia.org/w/api.php/"
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())

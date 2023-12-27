@@ -4,6 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
 @Dao
 interface DistrictDao {
@@ -11,7 +15,7 @@ interface DistrictDao {
     suspend fun insert(district: District)
 
     @Query("SELECT districtName FROM district ORDER BY districtName ASC")
-    fun getAllDistricts(): List<District>
+    fun getAllDistrictNames(): List<String>
     @Query("SELECT * FROM district WHERE districtName= :districtName")
     fun getDistrict(districtName: String): District
 
