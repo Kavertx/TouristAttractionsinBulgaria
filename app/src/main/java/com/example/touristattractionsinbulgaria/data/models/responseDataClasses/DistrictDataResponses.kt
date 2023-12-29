@@ -1,7 +1,7 @@
 package com.example.touristattractionsinbulgaria.data.models.responseDataClasses
 
 data class DistrictDataResponse(
-    val query: QueryAttraction
+    val query: QueryDistrict
 )
 data class QueryDistrict(
     val pages: Map<String, Page>

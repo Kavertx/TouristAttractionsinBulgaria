@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentHomeBinding
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
@@ -41,9 +42,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         try{
-            viewModel.addDistricts()
-//            viewModel.addAttractionData()
-//            viewModel.addImages()
+            viewModel.doNetworkAndDbWork()
         }
         catch (e: Exception){
             Log.d("err", e.toString())

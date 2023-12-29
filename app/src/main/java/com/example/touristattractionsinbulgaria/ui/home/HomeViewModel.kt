@@ -17,41 +17,54 @@ import com.example.touristattractionsinbulgaria.network.getAttractionDataWikiReq
 import com.example.touristattractionsinbulgaria.network.getAttractionImageFileWikiRequest
 import com.example.touristattractionsinbulgaria.network.getAttractionImageUrlWikiRequest
 import com.example.touristattractionsinbulgaria.network.getDistrictDataWikiRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class HomeViewModel(
     private val districtDao: DistrictDao,
     private val attractionDao: AttractionDao,
-    private val imageDao: ImageDao) : ViewModel() {
+    private val imageDao: ImageDao
+) : ViewModel() {
 
 
-    fun addDistricts(){
-        viewModelScope.launch {
-            val districtData = DistrictsArray.retrieveDistrictExtractData()
+    fun doNetworkAndDbWork(){
+        viewModelScope.launch(Dispatchers.IO) {
+            addDistricts()
+            addAttractionData()
+            addImages()
+        }
+    }
+    suspend fun addDistricts() {
+        val districtData = DistrictsArray.retrieveDistrictExtractData()
+        if (!districtDao.getAllDistrictIds().any()) {
             districtData.forEach {
                 districtDao.insert(it)
             }
         }
+
     }
-    fun addAttractionData(){
-        viewModelScope.launch {
-            val attractionData = AttractionDistrictMap.retrieveAttractionExtractData()
+
+    suspend fun addAttractionData() {
+        val attractionData = AttractionDistrictMap.retrieveAttractionExtractData()
+        if (!attractionDao.getAllAttractionIds().any()) {
             attractionData.forEach {
                 attractionDao.insert(it)
             }
         }
     }
-    fun addImages() {
-        viewModelScope.launch {
-            val attractionImages = AttractionArray.retrieveImageUrls()
+
+    suspend fun addImages() {
+        val attractionImages = AttractionArray.retrieveImageUrls()
+        if (!imageDao.getAllImageIds().any()) {
             attractionImages.forEach {
                 imageDao.insert(it)
             }
         }
+
     }
-    fun doNothing(){
-        val a = 4+9
+
+    private fun doNothing() {
+        val a = 4 + 9
         Log.d("a", "$a")
     }
 
@@ -64,22 +77,38 @@ class HomeViewModel(
      *
      * Returns a list of Attraction objects
      */
-    private suspend fun HashMap<String,String>.retrieveAttractionExtractData(): List<Attraction>{
+    private suspend fun HashMap<String, String>.retrieveAttractionExtractData(): List<Attraction> {
 
-        val attractionList : MutableList<Attraction> = mutableListOf()
-        for ((k,v) in this){
+        val attractionList: MutableList<Attraction> = mutableListOf()
+        for ((k, v) in this) {
 
-            if (k[0]<500.toChar()){     //trying to remove the attractions with cyrillic names, because there will be a conflict with the base url of the api calls
+            if (k[0] < 500.toChar()) {     //trying to remove the attractions with cyrillic names, because there will be a conflict with the base url of the api calls
                 val response = getAttractionDataWikiRequest(k)
-                val attraction = Attraction(
-                    attractionDistrictId = districtDao.getDistrictId(v),
-                    attractionName = k,
-                    description = response.query.pages.values.firstOrNull()?.extract.toString()
-                )
-                attractionList.add(attraction)
-            }
+                if (!response
+                        .query
+                        .pages
+                        .values
+                        .firstOrNull()
+                        ?.extract.isNullOrEmpty()
+                ) {
+                    val attraction = Attraction(
+                        attractionDistrictId = districtDao.getDistrictId(v),
+                        attractionName = k,
+                        description = response
+                            .query
+                            .pages
+                            .values
+                            .firstOrNull()
+                            ?.extract
+                            .toString()
+                    )
+                    attractionList.add(attraction)
+                }
 
+            }
         }
+        println(attractionList)
+        doNothing()
         return attractionList
     }
 
@@ -90,12 +119,12 @@ class HomeViewModel(
      *
      * Returns a list of Image objects
      */
-    private suspend fun List<String>.retrieveImageUrls(): List<Image>{
-        val imageList : MutableList<Image> = mutableListOf()
+    private suspend fun List<String>.retrieveImageUrls(): List<Image> {
+        val imageList: MutableList<Image> = mutableListOf()
 
         //i represents attractionName
-        for (i in this){
-            if (i[0]<500.toChar()) {     //trying to remove the attractions with cyrillic names, because there will be a conflict with the base url of the api calls
+        for (i in this) {
+            if (i[0] < 500.toChar()) {     //trying to remove the attractions with cyrillic names, because there will be a conflict with the base url of the api calls
                 val imageFileList: MutableList<String> = mutableListOf()
                 val imageFileResponse =
                     getAttractionImageFileWikiRequest(i) // contains all img file names
@@ -105,7 +134,7 @@ class HomeViewModel(
                 }
                 imageFileList.forEach {
                     val url =
-                        getAttractionImageUrlWikiRequest(it).queryImageUrls.imageInfo.values.firstOrNull()?.url
+                        getAttractionImageUrlWikiRequest(it).query.pages.values.firstOrNull()?.imageinfo?.firstOrNull()?.url
                     val img = Image(
                         imageUrl = url.toString(),
                         attractionId = attractionDao.getAttractionId(i)
@@ -125,7 +154,7 @@ class HomeViewModel(
      *
      * Returns a list of District objects
      */
-    private suspend fun List<String>.retrieveDistrictExtractData(): List<District>{
+    private suspend fun List<String>.retrieveDistrictExtractData(): List<District> {
         val districtList: MutableList<District> = mutableListOf()
         this.forEach {
             val response = getDistrictDataWikiRequest(it)
@@ -145,6 +174,7 @@ class HomeViewModel(
         return districtList
     }
 }
+
 class HomeViewModelFactory(
     private val districtDao: DistrictDao,
     private val attractionDao: AttractionDao,
@@ -153,7 +183,7 @@ class HomeViewModelFactory(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(districtDao,attractionDao,imageDao) as T
+            return HomeViewModel(districtDao, attractionDao, imageDao) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
