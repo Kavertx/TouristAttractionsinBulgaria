@@ -15,4 +15,7 @@ interface AttractionDao {
     fun getAttraction(attractionName: String): Attraction
     @Query("SELECT id FROM attraction WHERE attractionName = :attractionName")
     fun getAttractionId(attractionName: String): Int
+
+    @Query("SELECT id FROM attraction")
+    fun  getAllAttractionIds(): List<Int>
 }

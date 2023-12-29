@@ -12,10 +12,11 @@ data class QueryAttraction(
 )
 data class Page(
     val title: String,
-    val extract: String
+    val extract: String?
 )
 
 
+//Image File Names
 data class ImageFileResponse(
     val batchcomplete: String?,
     val query: QueryImages?
@@ -35,11 +36,17 @@ data class ImageFile(
 )
 
 
+//Image URL
 data class ImageUrlResponse(
-    val queryImageUrls: QueryImageUrls
+    val query: QueryImageUrls
 )
 data class QueryImageUrls(
-    val imageInfo: Map<String, ImageUrl>
+    val pages: Map<String, ImageInfo>
+)
+
+data class ImageInfo(
+    val title: String,
+    val imageinfo: List<ImageUrl>
 )
 data class ImageUrl(
     val url: String
