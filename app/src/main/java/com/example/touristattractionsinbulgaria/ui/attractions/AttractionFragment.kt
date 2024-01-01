@@ -29,12 +29,7 @@ class AttractionFragment  : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val attractionListViewModel =
-            ViewModelProvider(this)[AttractionViewModel::class.java]
-
         _binding = FragmentAttractionBinding.inflate(inflater, container, false)
-
-
         return binding.root
     }
 

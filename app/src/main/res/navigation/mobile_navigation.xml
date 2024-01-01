@@ -12,24 +12,50 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_attractionsFragment"
-            app:destination="@id/attractionsFragment" />
+            app:destination="@id/attractionListFragment" />
         <action
             android:id="@+id/action_navigation_home_to_districtsFragment"
-            app:destination="@id/districtsFragment" />
+            app:destination="@id/districtListFragment" />
     </fragment>
     <fragment
-        android:id="@+id/districtsFragment"
+        android:id="@+id/districtListFragment"
         android:name="com.example.touristattractionsinbulgaria.ui.districts.DistrictListFragment"
         android:label="@string/districts"
         tools:layout="@layout/fragment_district_list" >
         <action
-            android:id="@+id/action_districtsFragment_to_attractionsFragment"
-            app:destination="@id/attractionsFragment" />
+            android:id="@+id/action_districtListFragment_to_districtFragment"
+            app:destination="@id/districtFragment" />
     </fragment>
     <fragment
-        android:id="@+id/attractionsFragment"
+        android:id="@+id/attractionListFragment"
         android:name="com.example.touristattractionsinbulgaria.ui.attractions.AttractionListFragment"
         android:label="@string/attractions"
-        tools:layout="@layout/fragment_attraction_list" />
+        tools:layout="@layout/fragment_attraction_list" >
+        <action
+            android:id="@+id/action_attractionListFragment_to_attractionFragment"
+            app:destination="@id/attractionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/attractionFragment"
+        android:name="com.example.touristattractionsinbulgaria.ui.attractions.AttractionFragment"
+        android:label="fragment_attraction"
+        tools:layout="@layout/fragment_attraction">
+        <argument
+            android:name="attraction_id"
+            app:argType="integer"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/districtFragment"
+        android:name="com.example.touristattractionsinbulgaria.ui.districts.DistrictFragment"
+        android:label="fragment_district"
+        tools:layout="@layout/fragment_district" >
+        <action
+            android:id="@+id/action_districtFragment_to_attractionListFragment"
+            app:destination="@id/attractionListFragment" />
+        <argument
+            android:name="district_id"
+            app:argType="integer"/>
+    </fragment>
 
 </navigation>

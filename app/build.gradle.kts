@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("androidx.navigation.safeargs.kotlin")
 }
 
 android {
@@ -40,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.databinding:baseLibrary:3.2.0-alpha11")
     val room_version = "2.6.1"
 
     implementation("androidx.room:room-runtime:$room_version")
@@ -85,7 +87,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // Coil
-    implementation ("io.coil-kt:coil:1.1.1")
+    implementation ("io.coil-kt:coil:2.2.2")
     implementation ("androidx.leanback:leanback:1.0.0")
 
     // Glide

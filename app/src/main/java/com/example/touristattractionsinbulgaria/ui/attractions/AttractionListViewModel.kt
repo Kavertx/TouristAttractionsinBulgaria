@@ -5,11 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import com.example.touristattractionsinbulgaria.data.Attraction
 import com.example.touristattractionsinbulgaria.data.AttractionDao
 import com.example.touristattractionsinbulgaria.data.ImageDao
 
 class AttractionListViewModel(private val attractionDao: AttractionDao, private val imageDao: ImageDao) : ViewModel() {
-
+    val allAttractions: LiveData<List<Attraction>> = attractionDao.getAllAttractions().asLiveData()
 }
 
 class AttractionListViewModelFactory(private val attractionDao: AttractionDao, private val imageDao: ImageDao) : ViewModelProvider.Factory {

@@ -8,21 +8,21 @@
     app:cardCornerRadius="10dp"
     app:cardUseCompatPadding="true">
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="300dp"
-
         android:descendantFocusability="blocksDescendants">
-
         <ImageView
             android:id="@+id/item_imageView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_default="percent"
-            app:layout_constraintHeight_percent="0.5"
+            android:layout_height="130dp"
+            android:adjustViewBounds="true"
+            android:padding="2dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
         <TextView

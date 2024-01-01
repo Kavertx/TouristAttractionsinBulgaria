@@ -5,15 +5,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import com.example.touristattractionsinbulgaria.data.District
 import com.example.touristattractionsinbulgaria.data.DistrictDao
 import com.example.touristattractionsinbulgaria.ui.attractions.AttractionViewModel
 
 class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() {
 
-    fun doNothing(){
-        val a = 4+9
-        Log.d("a", "$a")
-    }
+    val allDistricts: LiveData<List<District>> = districtDao.getAllDistrictsFullInformation().asLiveData()
 }
 
 
