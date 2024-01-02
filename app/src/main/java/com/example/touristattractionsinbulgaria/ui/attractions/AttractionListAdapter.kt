@@ -35,13 +35,12 @@ class AttractionListAdapter(private val onClicked: (Attraction) -> Unit) :
 
     class AttractionViewHolder(private var binding: ItemAttractionBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        private val dao = RoomDb.getDatabase(context = Application()).imageDao()
-
+        private val imageDao = RoomDb.getDatabase(context = Application()).imageDao()
         //TODO: This looks suspicious as hell.
         // It probably would not work either.
         // Come back to it
         fun bind(attraction: Attraction) {
-            val imgList = dao.getAllImagesForAttraction(attraction.id)
+            val imgList = imageDao.getAllImagesForAttraction(attraction.id)
             binding.itemAttractionName.text = attraction.attractionName
             binding.itemAttractionDescription.text = attraction.description
             //bindImage(binding.itemImageView, imgList[1]?.imageUrl)

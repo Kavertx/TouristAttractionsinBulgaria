@@ -20,10 +20,10 @@ interface ImageDao {
     @Query("SELECT * " +
             "FROM image " +
             "WHERE imageUrl= :imageUrl")
-    fun getImage(imageUrl: String): Image
+    suspend fun getImage(imageUrl: String): Image
 
 
     @Query("SELECT id " +
             "FROM image")
-    fun getAllImageIds(): List<Int>
+    suspend fun getAllImageIds(): List<Int>
 }

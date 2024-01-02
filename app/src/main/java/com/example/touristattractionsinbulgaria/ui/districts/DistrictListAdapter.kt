@@ -29,10 +29,10 @@ class DistrictListAdapter(private val onClicked: (District) -> Unit) :
 
     override fun onBindViewHolder(holder: DistrictViewHolder, position: Int) {
         val current = getItem(position)
+        holder.bind(current)
         holder.itemView.setOnClickListener {
             onClicked(current)
         }
-        holder.bind(current)
     }
 
     class DistrictViewHolder(private var binding: ItemDistrictBinding) :

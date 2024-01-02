@@ -1,18 +1,34 @@
 package com.example.touristattractionsinbulgaria.ui.districts
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.touristattractionsinbulgaria.data.Attraction
 import com.example.touristattractionsinbulgaria.data.District
 import com.example.touristattractionsinbulgaria.data.DistrictDao
-import com.example.touristattractionsinbulgaria.ui.attractions.AttractionViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() {
 
-    val allDistricts: LiveData<List<District>> = districtDao.getAllDistrictsFullInformation().asLiveData()
+    private val _allDistricts = MutableLiveData<List<District>?>()
+    val allDistricts: LiveData<List<District>?> get() = _allDistricts
+
+    fun fetchData(){
+        viewModelScope.launch {
+            _allDistricts.value = getAttractions()
+        }
+    }
+    suspend fun getAttractions(): List<District>{
+        return withContext(Dispatchers.IO){
+            districtDao.getAllDistrictsFullInformation()
+        }
+    }
+
+
 }
 
 

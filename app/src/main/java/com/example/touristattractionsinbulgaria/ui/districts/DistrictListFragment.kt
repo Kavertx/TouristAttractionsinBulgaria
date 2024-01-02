@@ -17,6 +17,9 @@ import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentDistrictListBinding
 import com.example.touristattractionsinbulgaria.ui.attractions.AttractionListAdapter
 import com.example.touristattractionsinbulgaria.ui.attractions.AttractionListFragmentDirections
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class DistrictListFragment : Fragment() {
 
@@ -38,23 +41,24 @@ class DistrictListFragment : Fragment() {
     ): View {
 
         _binding = FragmentDistrictListBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        viewModel.fetchData()
         val adapter = DistrictListAdapter {
             val action = DistrictListFragmentDirections.actionDistrictListFragmentToDistrictFragment(it.id)
             this.findNavController().navigate(action)
         }
-
-        viewModel.allDistricts.observe(this.viewLifecycleOwner){ districts->
-            districts.let {
+        viewModel.allDistricts.observe(this.viewLifecycleOwner){ districtsCurr->
+            districtsCurr.let {
                 adapter.submitList(it)
             }
         }
         binding.districtListRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
         binding.districtListRecyclerView.adapter = adapter
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
     }
 
     override fun onDestroyView() {

@@ -18,23 +18,23 @@ interface DistrictDao {
     @Query("SELECT districtName " +
             "FROM district " +
             "ORDER BY districtName")
-    fun getAllDistrictNames(): List<String>
+    suspend fun getAllDistrictNames(): List<String>
     @Query("SELECT * " +
             "FROM district " +
             "WHERE districtName= :districtName")
-    fun getDistrict(districtName: String): District
+    suspend fun getDistrict(districtName: String): District
 
     @Query("SELECT id " +
             "FROM district " +
             "WHERE districtName= :districtName")
-    fun getDistrictId(districtName: String): Int
+    suspend fun getDistrictId(districtName: String): Int
 
     @Query("SELECT id " +
             "FROM district")
-    fun  getAllDistrictIds(): List<Int>
+    suspend fun  getAllDistrictIds(): List<Int>
 
     @Query("SELECT * " +
             "FROM District " +
             "ORDER BY districtName")
-    fun getAllDistrictsFullInformation(): Flow<List<District>>
+    suspend fun getAllDistrictsFullInformation(): List<District>
 }

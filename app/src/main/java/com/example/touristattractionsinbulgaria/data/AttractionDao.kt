@@ -13,7 +13,7 @@ interface AttractionDao {
     @Query("SELECT * " +
             "FROM attraction " +
             "ORDER BY attractionName")
-    fun getAllAttractions(): Flow<List<Attraction>>
+    suspend fun getAllAttractions(): List<Attraction>
     @Query("SELECT * " +
             "FROM attraction " +
             "WHERE attractionName= :attractionName")
@@ -21,15 +21,15 @@ interface AttractionDao {
     @Query("SELECT id " +
             "FROM attraction " +
             "WHERE attractionName = :attractionName")
-    fun getAttractionId(attractionName: String): Int
+    suspend fun getAttractionId(attractionName: String): Int
 
     @Query("SELECT id " +
             "FROM attraction")
-    fun  getAllAttractionIds(): List<Int>
+    suspend fun  getAllAttractionIds(): List<Int>
 
     @Query("SELECT * " +
             "FROM attraction " +
             "WHERE attractionDistrictId= :id " +
             "ORDER BY attractionName")
-    fun getAttractionsWithDistrictId(id: Int): List<Attraction>
+    suspend fun getAttractionsWithDistrictId(id: Int): List<Attraction>
 }

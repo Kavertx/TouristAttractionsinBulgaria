@@ -58,7 +58,6 @@ class HomeViewModel(
                 imageDao.insert(it)
             }
         }
-
     }
 
     private fun doNothing() {
