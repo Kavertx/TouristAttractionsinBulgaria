@@ -1,25 +1,42 @@
 package com.example.touristattractionsinbulgaria.ui.districts
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import com.example.touristattractionsinbulgaria.data.District
 import com.example.touristattractionsinbulgaria.data.DistrictDao
-import com.example.touristattractionsinbulgaria.ui.attractions.AttractionViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() {
 
-    fun doNothing(){
-        val a = 4+9
-        Log.d("a", "$a")
+    //data is static(already in the database),
+    //but without this livedata-observe method,
+    //it doesn't get properly sent to the adapter
+    private val _allDistricts = MutableLiveData<List<District>?>()
+    val allDistricts: LiveData<List<District>?> get() = _allDistricts
+
+    fun fetchData() {
+        viewModelScope.launch {
+            _allDistricts.value = getAttractions()
+        }
     }
+
+    private suspend fun getAttractions(): List<District> {
+        return withContext(Dispatchers.IO) {
+            districtDao.getAllDistrictsFullInformation()
+        }
+    }
+
+
 }
 
 
-
-
-class DistrictListViewModelFactory(private val districtDao: DistrictDao) : ViewModelProvider.Factory {
+class DistrictListViewModelFactory(private val districtDao: DistrictDao) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(DistrictListViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

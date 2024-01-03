@@ -13,12 +13,39 @@ interface ImageDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(image: Image)
 
-    @Query("SELECT * FROM image WHERE attractionId= :attractionId")
+    @Query(
+        "SELECT imageUrl " +
+                "FROM Image " +
+                "WHERE attractionId=:attractionId " +
+                "LIMIT 1"
+    )
+    suspend fun getOneImageForAttraction(attractionId: Int): String
+
+    @Query(
+        "SELECT imageUrl " +
+                "FROM Image " +
+                "WHERE attractionId=:attractionId"
+    )
+    suspend fun getAllImageUrlsForAttraction(attractionId: Int): List<String>
+
+    @Query(
+        "SELECT * " +
+                "FROM image " +
+                "WHERE attractionId= :attractionId"
+    )
     fun getAllImagesForAttraction(attractionId: Int): List<Image>
-    @Query("SELECT * FROM image WHERE imageUrl= :imageUrl")
-    fun getImage(imageUrl: String): Image
+
+    @Query(
+        "SELECT * " +
+                "FROM image " +
+                "WHERE imageUrl= :imageUrl"
+    )
+    suspend fun getImage(imageUrl: String): Image
 
 
-    @Query("SELECT id FROM image")
-    fun getAllImageIds(): List<Int>
+    @Query(
+        "SELECT id " +
+                "FROM image"
+    )
+    suspend fun getAllImageIds(): List<Int>
 }

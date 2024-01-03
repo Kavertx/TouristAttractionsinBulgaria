@@ -6,11 +6,11 @@ import com.example.touristattractionsinbulgaria.data.models.responseDataClasses.
 import com.example.touristattractionsinbulgaria.data.models.responseDataClasses.ImageUrlResponse
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.http.Query
 
 //TODO: For attractions in bulgarian, use the bg.wikipedia.org base url or just delete all attractions in bg
@@ -23,7 +23,7 @@ private val retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
     .build()
 
-interface ApiService{
+interface ApiService {
     @GET("w/api.php")
     suspend fun getAttractionData(
         @Query("action") action: String = "query",
@@ -61,7 +61,7 @@ interface ApiService{
 
 }
 
-object TouristAttractionApi{
+object TouristAttractionApi {
     val retrofitService: ApiService by lazy {
         retrofit.create(ApiService::class.java)
     }
@@ -72,16 +72,19 @@ suspend fun getAttractionDataWikiRequest(titles: String): AttractionDataResponse
         TouristAttractionApi.retrofitService.getAttractionData(titles = titles)
     }
 }
+
 suspend fun getAttractionImageFileWikiRequest(titles: String): ImageFileResponse {
     return withContext(Dispatchers.IO) {
         TouristAttractionApi.retrofitService.getAttractionImageFile(titles = titles)
     }
 }
+
 suspend fun getAttractionImageUrlWikiRequest(titles: String): ImageUrlResponse {
     return withContext(Dispatchers.IO) {
         TouristAttractionApi.retrofitService.getAttractionImageUrl(titles = titles)
     }
 }
+
 suspend fun getDistrictDataWikiRequest(titles: String): DistrictDataResponse {
     return withContext(Dispatchers.IO) {
         TouristAttractionApi.retrofitService.getDistrictData(titles = titles)

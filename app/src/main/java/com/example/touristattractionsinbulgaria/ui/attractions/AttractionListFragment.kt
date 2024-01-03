@@ -7,18 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionListBinding
-import com.example.touristattractionsinbulgaria.network.getAttractionDataWikiRequest
-import com.example.touristattractionsinbulgaria.network.getAttractionImageFileWikiRequest
-import kotlinx.coroutines.*
 
 class AttractionListFragment : Fragment() {
 
     private var _binding: FragmentAttractionListBinding? = null
     private val viewModel: AttractionListViewModel by activityViewModels {
-        AttractionListViewModelFactory((activity?.application as TouristAttractionApplication).database.attractionDao(),
-            (activity?.application as TouristAttractionApplication).database.imageDao()
+        AttractionListViewModelFactory(
+            (activity?.application as TouristAttractionApplication).database.attractionDao(),
         )
     }
 
@@ -31,16 +30,26 @@ class AttractionListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentAttractionListBinding.inflate(inflater, container, false)
-
-
+        val adapter = AttractionListAdapter {
+            val action =
+                AttractionListFragmentDirections.actionAttractionListFragmentToAttractionFragment(it.attraction.id)
+            this.findNavController().navigate(action)
+        }
+        viewModel.setAttractionList()
+        binding.attractionListRecyclerView.adapter = adapter
+        viewModel.allAttractions.observe(this.viewLifecycleOwner) { attractionsCurr ->
+            attractionsCurr.let {
+                adapter.submitList(it)
+                Log.d("observe", "submit")
+            }
+        }
+        binding.attractionListRecyclerView.layoutManager = GridLayoutManager(context, 2)
         return binding.root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-
     }
 }

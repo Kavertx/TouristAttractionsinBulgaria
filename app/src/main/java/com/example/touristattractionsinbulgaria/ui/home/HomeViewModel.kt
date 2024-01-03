@@ -25,18 +25,17 @@ class HomeViewModel(
     private val attractionDao: AttractionDao,
     private val imageDao: ImageDao
 ) : ViewModel() {
-
-
-    fun doNetworkAndDbWork(){
+    fun doNetworkAndDbWork() {
         viewModelScope.launch(Dispatchers.IO) {
             addDistricts()
             addAttractionData()
             addImages()
         }
     }
+
     suspend fun addDistricts() {
-        val districtData = DistrictsArray.retrieveDistrictExtractData()
         if (!districtDao.getAllDistrictIds().any()) {
+            val districtData = DistrictsArray.retrieveDistrictExtractData()
             districtData.forEach {
                 districtDao.insert(it)
             }
@@ -45,8 +44,8 @@ class HomeViewModel(
     }
 
     suspend fun addAttractionData() {
-        val attractionData = AttractionDistrictMap.retrieveAttractionExtractData()
         if (!attractionDao.getAllAttractionIds().any()) {
+            val attractionData = AttractionDistrictMap.retrieveAttractionExtractData()
             attractionData.forEach {
                 attractionDao.insert(it)
             }
@@ -54,13 +53,12 @@ class HomeViewModel(
     }
 
     suspend fun addImages() {
-        val attractionImages = AttractionArray.retrieveImageUrls()
         if (!imageDao.getAllImageIds().any()) {
+            val attractionImages = AttractionArray.retrieveImageUrls()
             attractionImages.forEach {
                 imageDao.insert(it)
             }
         }
-
     }
 
     private fun doNothing() {
@@ -107,8 +105,6 @@ class HomeViewModel(
 
             }
         }
-        println(attractionList)
-        doNothing()
         return attractionList
     }
 
