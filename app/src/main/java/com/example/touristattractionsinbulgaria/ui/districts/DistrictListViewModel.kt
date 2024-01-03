@@ -14,6 +14,9 @@ import kotlinx.coroutines.withContext
 
 class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() {
 
+    //data is static(already in the database),
+    //but without this livedata-observe method,
+    //it doesn't get properly sent to the adapter
     private val _allDistricts = MutableLiveData<List<District>?>()
     val allDistricts: LiveData<List<District>?> get() = _allDistricts
 
@@ -22,7 +25,7 @@ class DistrictListViewModel(private val districtDao: DistrictDao) : ViewModel() 
             _allDistricts.value = getAttractions()
         }
     }
-    suspend fun getAttractions(): List<District>{
+    private suspend fun getAttractions(): List<District>{
         return withContext(Dispatchers.IO){
             districtDao.getAllDistrictsFullInformation()
         }

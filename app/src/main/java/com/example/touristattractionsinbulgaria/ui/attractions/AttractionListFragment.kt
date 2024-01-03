@@ -11,9 +11,6 @@ import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionListBinding
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class AttractionListFragment : Fragment() {
 
@@ -40,7 +37,7 @@ class AttractionListFragment : Fragment() {
             val action = AttractionListFragmentDirections.actionAttractionListFragmentToAttractionFragment(it.id)
             this.findNavController().navigate(action)
         }
-        viewModel.fetchData()
+        viewModel.setAttractionList()
         binding.attractionListRecyclerView.adapter = adapter
         viewModel.allAttractions.observe(this.viewLifecycleOwner){ attractionsCurr->
             attractionsCurr.let {

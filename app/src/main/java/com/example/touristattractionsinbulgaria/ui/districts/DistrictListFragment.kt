@@ -49,6 +49,8 @@ class DistrictListFragment : Fragment() {
         viewModel.allDistricts.observe(this.viewLifecycleOwner){ districtsCurr->
             districtsCurr.let {
                 adapter.submitList(it)
+                //This logging triggers twice on all but the first time creating the fragment, but the fragment is not being destroyed between the double logs
+                Log.d("adapterSize", "${it?.size}")
             }
         }
         binding.districtListRecyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
@@ -63,6 +65,7 @@ class DistrictListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.d("RIP", "Deadge")
         _binding = null
     }
 }

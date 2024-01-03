@@ -3,6 +3,9 @@ package com.example.touristattractionsinbulgaria.ui.attractions
 import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +14,10 @@ import com.example.touristattractionsinbulgaria.R
 import com.example.touristattractionsinbulgaria.data.Attraction
 import com.example.touristattractionsinbulgaria.data.RoomDb
 import com.example.touristattractionsinbulgaria.databinding.ItemAttractionBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AttractionListAdapter(private val onClicked: (Attraction) -> Unit) :
     ListAdapter<Attraction, AttractionListAdapter.AttractionViewHolder>(DiffCallback) {
@@ -40,16 +47,22 @@ class AttractionListAdapter(private val onClicked: (Attraction) -> Unit) :
         // It probably would not work either.
         // Come back to it
         fun bind(attraction: Attraction) {
-            val imgList = imageDao.getAllImagesForAttraction(attraction.id)
+            var url: String?  = null
+            GlobalScope.launch (Dispatchers.IO){
+                url= imageDao.getOneImageForAttraction(attraction.id)
+            }
+           // val imgList = imageDao.getAllImagesForAttraction(attraction.id)
             binding.itemAttractionName.text = attraction.attractionName
             binding.itemAttractionDescription.text = attraction.description
             //bindImage(binding.itemImageView, imgList[1]?.imageUrl)
-            Glide
-                .with(binding.root.context)
-                .load(imgList[1]?.imageUrl)
-                .centerCrop()
-                .placeholder(R.drawable.ic_launcher_foreground)
-                .into(binding.itemImageView)
+            if(url!=null) {
+                Glide
+                    .with(binding.root.context)
+                    .load(url)
+                    .centerCrop()
+                    .placeholder(R.drawable.loading_animation)
+                    .into(binding.itemImageView)
+            }
         }
     }
 
