@@ -108,7 +108,7 @@ val AttractionDistrictMap = hashMapOf<String, String>(
     "Ruse Opera and Philharmonic Society" to "Ruse Province",
 
     "Srebarna Nature Reserve" to "Silistra Province",
-    "Етнографски музей „Дунавски риболов и лодкостроене“"  to "Silistra Province",
+    "Етнографски музей „Дунавски риболов и лодкостроене“" to "Silistra Province",
     "Регионален исторически музей (Силистра)" to "Silistra Province",
 
     "Смолянски езера" to "Smolyan Province",
@@ -141,6 +141,6 @@ val AttractionDistrictMap = hashMapOf<String, String>(
     "Cabyle" to "Yambol Province",
     "Регионален исторически музей (Ямбол)" to "Yambol Province",
     "Ямболски безистен" to "Yambol Province"
-    )
+)
 val DistrictsArray = AttractionDistrictMap.values.distinct()
 val AttractionArray = AttractionDistrictMap.keys.toList()

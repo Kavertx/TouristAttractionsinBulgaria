@@ -1,17 +1,11 @@
 package com.example.touristattractionsinbulgaria.ui.districts
 
-import android.app.Application
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.touristattractionsinbulgaria.R
-import com.example.touristattractionsinbulgaria.data.Attraction
 import com.example.touristattractionsinbulgaria.data.District
-import com.example.touristattractionsinbulgaria.data.RoomDb
-import com.example.touristattractionsinbulgaria.databinding.ItemAttractionBinding
 import com.example.touristattractionsinbulgaria.databinding.ItemDistrictBinding
 
 class DistrictListAdapter(private val onClicked: (District) -> Unit) :

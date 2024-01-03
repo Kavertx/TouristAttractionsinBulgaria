@@ -2,7 +2,6 @@ package com.example.touristattractionsinbulgaria
 
 import android.widget.ImageView
 import androidx.core.net.toUri
-import androidx.databinding.BindingAdapter
 import coil.load
 
 //@BindingAdapter("imageUrl")

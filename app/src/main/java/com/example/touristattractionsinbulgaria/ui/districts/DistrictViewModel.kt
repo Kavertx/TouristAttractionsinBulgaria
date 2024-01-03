@@ -2,14 +2,9 @@ package com.example.touristattractionsinbulgaria.ui.districts
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.touristattractionsinbulgaria.data.AttractionDao
-import com.example.touristattractionsinbulgaria.data.District
 import com.example.touristattractionsinbulgaria.data.DistrictDao
-import com.example.touristattractionsinbulgaria.data.ImageDao
-import com.example.touristattractionsinbulgaria.ui.attractions.AttractionViewModel
 
-class DistrictViewModel(private val districtDao: DistrictDao) : ViewModel() {
-}
+class DistrictViewModel(private val districtDao: DistrictDao) : ViewModel()
 
 
 class DistrictViewModelFactory(private val districtDao: DistrictDao) : ViewModelProvider.Factory {

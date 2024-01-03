@@ -14,5 +14,5 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="1dp"
         android:scrollbars="vertical"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>
