@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.touristattractionsinbulgaria.TouristAttractionApplication
 import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionListBinding
@@ -15,12 +16,11 @@ import com.example.touristattractionsinbulgaria.databinding.FragmentAttractionLi
 class AttractionListFragment : Fragment() {
 
     private var _binding: FragmentAttractionListBinding? = null
-    private val viewModel: AttractionListViewModel by activityViewModels {
-        AttractionListViewModelFactory(
+    private val viewModel: AttractionViewModel by activityViewModels {
+        AttractionViewModelFactory(
             (activity?.application as TouristAttractionApplication).database.attractionDao(),
         )
     }
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -47,7 +47,6 @@ class AttractionListFragment : Fragment() {
         binding.attractionListRecyclerView.layoutManager = GridLayoutManager(context, 2)
         return binding.root
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--suppress ALL -->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -34,11 +35,17 @@
         <action
             android:id="@+id/action_attractionListFragment_to_attractionFragment"
             app:destination="@id/attractionFragment" />
+        <argument
+            android:name="district_id"
+            app:argType="integer"/>
+        <action
+            android:id="@+id/action_attractionListFragment_self"
+            app:destination="@id/attractionListFragment" />
     </fragment>
     <fragment
         android:id="@+id/attractionFragment"
         android:name="com.example.touristattractionsinbulgaria.ui.attractions.AttractionFragment"
-        android:label="fragment_attraction"
+        android:label="@string/attraction"
         tools:layout="@layout/fragment_attraction">
         <argument
             android:name="attraction_id"
@@ -48,7 +55,7 @@
     <fragment
         android:id="@+id/districtFragment"
         android:name="com.example.touristattractionsinbulgaria.ui.districts.DistrictFragment"
-        android:label="fragment_district"
+        android:label="@string/district"
         tools:layout="@layout/fragment_district">
         <action
             android:id="@+id/action_districtFragment_to_attractionListFragment"

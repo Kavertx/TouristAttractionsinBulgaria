@@ -20,8 +20,8 @@ class DistrictListFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private val viewModel: DistrictListViewModel by activityViewModels {
-        DistrictListViewModelFactory(
+    private val viewModel: DistrictViewModel by activityViewModels {
+        DistrictViewModelFactory(
             (activity?.application as TouristAttractionApplication).database.districtDao()
         )
     }
@@ -33,7 +33,7 @@ class DistrictListFragment : Fragment() {
     ): View {
 
         _binding = FragmentDistrictListBinding.inflate(inflater, container, false)
-        viewModel.fetchData()
+        viewModel.setDistrictList()
         val adapter = DistrictListAdapter {
             val action =
                 DistrictListFragmentDirections.actionDistrictListFragmentToDistrictFragment(it.id)
@@ -42,7 +42,8 @@ class DistrictListFragment : Fragment() {
         viewModel.allDistricts.observe(this.viewLifecycleOwner) { districtsCurr ->
             districtsCurr.let {
                 adapter.submitList(it)
-                //This logging triggers twice on all but the first time creating the fragment, but the fragment is not being destroyed between the double logs
+                //This logging triggers twice on all but the first time creating the fragment,
+                // but the fragment is not being destroyed between the double logs
                 Log.d("adapterSize", "${it?.size}")
             }
         }

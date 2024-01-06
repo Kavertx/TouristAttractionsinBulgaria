@@ -44,8 +44,19 @@ interface AttractionDao {
                 "WHERE attractionDistrictId= :id " +
                 "ORDER BY attractionName"
     )
-    suspend fun getAttractionsWithDistrictId(id: Int): List<Attraction>
+    suspend fun getAttractionsWithDistrictId(id: Int): List<AttractionWithImages>
 
-    @Query("SELECT * FROM attraction")
-    suspend fun getAttractionsWithImages(): List<AttractionWithImages>
+    @Query(
+        "SELECT * " +
+                "FROM attraction " +
+                "ORDER BY attractionName"
+    )
+    suspend fun getAllAttractionsWithImages(): List<AttractionWithImages>
+
+    @Query(
+        "SELECT * " +
+                "FROM attraction " +
+                "WHERE id=:id"
+    )
+    suspend fun getOneAttractionWithImages(id: Int): AttractionWithImages
 }

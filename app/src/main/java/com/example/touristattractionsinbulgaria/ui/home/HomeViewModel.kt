@@ -1,6 +1,5 @@
 package com.example.touristattractionsinbulgaria.ui.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -33,7 +32,7 @@ class HomeViewModel(
         }
     }
 
-    suspend fun addDistricts() {
+    private suspend fun addDistricts() {
         if (!districtDao.getAllDistrictIds().any()) {
             val districtData = DistrictsArray.retrieveDistrictExtractData()
             districtData.forEach {
@@ -43,7 +42,7 @@ class HomeViewModel(
 
     }
 
-    suspend fun addAttractionData() {
+    private suspend fun addAttractionData() {
         if (!attractionDao.getAllAttractionIds().any()) {
             val attractionData = AttractionDistrictMap.retrieveAttractionExtractData()
             attractionData.forEach {
@@ -52,18 +51,13 @@ class HomeViewModel(
         }
     }
 
-    suspend fun addImages() {
+    private suspend fun addImages() {
         if (!imageDao.getAllImageIds().any()) {
             val attractionImages = AttractionArray.retrieveImageUrls()
             attractionImages.forEach {
                 imageDao.insert(it)
             }
         }
-    }
-
-    private fun doNothing() {
-        val a = 4 + 9
-        Log.d("a", "$a")
     }
 
 
@@ -124,13 +118,24 @@ class HomeViewModel(
                 val imageFileList: MutableList<String> = mutableListOf()
                 val imageFileResponse =
                     getAttractionImageFileWikiRequest(i) // contains all img file names
-                imageFileResponse.query?.pages?.values?.firstOrNull()?.images?.forEach {
+                imageFileResponse
+                    .query
+                    ?.pages
+                    ?.values
+                    ?.firstOrNull()
+                    ?.images?.forEach {
                     // adds all image file names for this attraction to imageFileList
                     imageFileList.add(it.title.toString())
                 }
                 imageFileList.forEach {
                     val url =
-                        getAttractionImageUrlWikiRequest(it).query.pages.values.firstOrNull()?.imageinfo?.firstOrNull()?.url
+                        getAttractionImageUrlWikiRequest(it)
+                            .query
+                            .pages
+                            .values
+                            .firstOrNull()
+                            ?.imageinfo?.firstOrNull()
+                            ?.url
                     val img = Image(
                         imageUrl = url.toString(),
                         attractionId = attractionDao.getAttractionId(i)
@@ -155,7 +160,7 @@ class HomeViewModel(
         this.forEach {
             val response = getDistrictDataWikiRequest(it)
 
-            val district: District = District(
+            val district = District(
                 districtName = it,
                 districtDescription = response
                     .query
