@@ -39,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@id/district_name"
         app:layout_constraintBottom_toTopOf="@id/attractions_in_district" />
 
-    <TextView
+    <Button
         android:id="@+id/attractions_in_district"
         android:layout_margin="80dp"
         android:padding="5dp"

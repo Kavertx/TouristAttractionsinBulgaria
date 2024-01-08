@@ -35,6 +35,11 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        //this fixes the navigation issues
+        binding.navView.setOnItemSelectedListener{
+            navController.navigate(it.itemId)
+            true
+        }
         binding.navView.setOnItemReselectedListener { navController.navigate(it.itemId) }
     }
 

@@ -21,6 +21,8 @@ class AttractionListFragment : Fragment() {
             (activity?.application as TouristAttractionApplication).database.attractionDao(),
         )
     }
+    private val navigationArgs: AttractionListFragmentArgs by navArgs()
+
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -36,17 +38,29 @@ class AttractionListFragment : Fragment() {
                 AttractionListFragmentDirections.actionAttractionListFragmentToAttractionFragment(it.attraction.id)
             this.findNavController().navigate(action)
         }
-        viewModel.setAttractionList()
         binding.attractionListRecyclerView.adapter = adapter
-        viewModel.allAttractions.observe(this.viewLifecycleOwner) { attractionsCurr ->
-            attractionsCurr.let {
-                adapter.submitList(it)
-                Log.d("observe", "submit")
+        if (!requireArguments().isEmpty) {
+            Log.d("argument", requireArguments().toString())
+            viewModel.setAttractionListWithDistrict(navigationArgs.districtId)
+            viewModel.selectedDistrictAttractions.observe(this.viewLifecycleOwner) { attractionsCurr ->
+                attractionsCurr.let {
+                    adapter.submitList(it)
+                    Log.d("attractionListSize", "${it.size}")
+                }
+            }
+        } else {
+            viewModel.setAttractionList()
+            viewModel.allAttractions.observe(this.viewLifecycleOwner) { attractionsCurr ->
+                attractionsCurr.let {
+                    adapter.submitList(it)
+                    Log.d("observe", "submit")
+                }
             }
         }
         binding.attractionListRecyclerView.layoutManager = GridLayoutManager(context, 2)
         return binding.root
     }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
