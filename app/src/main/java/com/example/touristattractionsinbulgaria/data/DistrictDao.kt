@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.touristattractionsinbulgaria.data.models.AttractionWithImages
 
 @Dao
 interface DistrictDao {
@@ -43,4 +44,19 @@ interface DistrictDao {
                 "ORDER BY districtName"
     )
     suspend fun getAllDistrictsFullInformation(): List<District>
+
+    @Query(
+        "SELECT * " +
+                "FROM Attraction " +
+                "WHERE attractionDistrictId=:districtId " +
+                "ORDER BY attractionName"
+    )
+    suspend fun getAllAttractionsForDistrict(districtId: Int): List<AttractionWithImages>
+
+    @Query("SELECT * " +
+                    "FROM District " +
+                    "WHERE id=:id"
+    )
+    suspend fun getDistrictById(id: Int): District
+
 }

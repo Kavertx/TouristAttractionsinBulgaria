@@ -6,4 +6,6 @@
     <string name="attraction">Attraction</string>
     <string name="description">Description</string>
     <string name="district">District</string>
+    <string name="attractionlist">attractionList</string>
+    <string name="district_id">district_id</string>
 </resources>
