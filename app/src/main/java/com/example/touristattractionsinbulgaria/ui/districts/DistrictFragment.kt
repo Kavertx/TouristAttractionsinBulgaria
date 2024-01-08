@@ -2,6 +2,7 @@ package com.example.touristattractionsinbulgaria.ui.districts
 
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,21 +37,27 @@ class DistrictFragment : Fragment() {
         return binding.root
     }
 
-    private fun bind(district: District){
+    private fun bind(district: District) {
         binding.apply {
             districtName.text = district.districtName
             districtDescription.text = district.districtDescription
             districtDescription.movementMethod = ScrollingMovementMethod.getInstance()
-//            attractionsInDistrict.setOnClickListener {
-//                val action = DistrictFragmentDirections.actionDistrictFragmentToAttractionListFragment(district.id)
-//                findNavController().navigate(action)
-//            }
+            attractionsInDistrict.setOnClickListener {
+                findNavController().navigate(
+                    DistrictFragmentDirections.actionDistrictFragmentToAttractionListFragment(
+                        district.id
+                    )
+                )
+                Log.d("districtId", "${district.id}")
+
+            }
         }
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getSelectedDistrict(navigationArgs.districtId)
-        viewModel.selectedDistrict.observe(this.viewLifecycleOwner){ selectedDistrict->
+        viewModel.selectedDistrict.observe(this.viewLifecycleOwner) { selectedDistrict ->
             district = selectedDistrict
             bind(district)
         }

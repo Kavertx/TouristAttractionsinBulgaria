@@ -48,7 +48,7 @@ class AttractionViewModel(
 
     fun setAttractionListWithDistrict(id:Int) {
         viewModelScope.launch {
-            _allAttractions.value = getAttractionsForDistrict(id)
+            _selectedDistrictAttractions.value = getAttractionsForDistrict(id)
         }
     }
 
